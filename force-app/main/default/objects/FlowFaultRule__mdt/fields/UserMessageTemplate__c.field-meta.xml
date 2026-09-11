@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UserMessageTemplate__c</fullName>
+    <description>Text shown to the end user. Placeholders: {detail} parsed message body (for a validation rule this is the rule's error message verbatim), {fields} comma-separated field names, {statusCode}, {operation}, {source} trigger or Apex class name, {exceptionType}, {referenceId}, {adminContact}. Leave blank to show {detail}.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>User Message Template</label>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>4</visibleLines>
+</CustomField>

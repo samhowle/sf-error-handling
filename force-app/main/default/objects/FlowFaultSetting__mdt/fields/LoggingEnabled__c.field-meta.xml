@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LoggingEnabled__c</fullName>
+    <description>Master switch. When false, faults are parsed and returned to the flow but not written to any sink.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Logging Enabled</label>
+    <defaultValue>true</defaultValue>
+    <type>Checkbox</type>
+</CustomField>

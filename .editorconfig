@@ -1,0 +1,19 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Apex and JavaScript follow kernel.md: tabs, compact-readable, printWidth 120
+[*.{cls,trigger,js,mjs,cjs,json}]
+indent_style = tab
+
+# Salesforce metadata XML keeps the 4-space style Flow Builder and `sf project retrieve` emit
+[*.xml]
+indent_style = space
+indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = false

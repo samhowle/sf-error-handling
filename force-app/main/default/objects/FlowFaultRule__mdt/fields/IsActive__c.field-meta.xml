@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsActive__c</fullName>
+    <description>Uncheck to disable a rule without deleting it.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Is Active</label>
+    <defaultValue>true</defaultValue>
+    <type>Checkbox</type>
+</CustomField>

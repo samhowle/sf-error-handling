@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <description>Standardised Flow fault panel: user message, next steps, reference ID with copy button, expandable technical details, and Try again / Cancel buttons that drive flow navigation. Feed it the outputs of the FlowFaultHandlerCore subflow.</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Flow Fault Panel</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="heading" type="String" label="Heading" description="Defaults to the FlowFaultHeading custom label." role="inputOnly"/>
+            <property name="userMessage" type="String" label="User Message" description="From FlowFaultHandlerCore.userMessage" required="true" role="inputOnly"/>
+            <property name="nextSteps" type="String" label="Next Steps" description="From FlowFaultHandlerCore.nextSteps" role="inputOnly"/>
+            <property name="referenceId" type="String" label="Reference ID" description="From FlowFaultHandlerCore.referenceId" role="inputOnly"/>
+            <property name="technicalMessage" type="String" label="Technical Message" description="From FlowFaultHandlerCore.technicalMessage; shown behind an expander" role="inputOnly"/>
+            <property name="adminGuidance" type="String" label="Admin Guidance" description="From FlowFaultHandlerCore.adminGuidance; shown inside the expander" role="inputOnly"/>
+            <property name="category" type="String" label="Category" role="inputOnly"/>
+            <property name="isUserCorrectable" type="Boolean" label="Is User Correctable" description="Switches the panel to warning styling" role="inputOnly"/>
+            <property name="isRetryable" type="Boolean" label="Is Retryable" role="inputOnly"/>
+            <property name="isLogged" type="Boolean" label="Is Logged" description="When false, adds a notice asking the user to include the technical details" role="inputOnly"/>
+            <property name="showTechnicalDetails" type="Boolean" label="Show Technical Details Expander" default="true" role="inputOnly"/>
+            <property name="allowRetry" type="Boolean" label="Allow Retry" default="true" description="Hide the Try again button when the parent flow cannot loop back" role="inputOnly"/>
+            <property name="retryLabel" type="String" label="Retry Button Label" description="Defaults to the FlowFaultTryAgain custom label" role="inputOnly"/>
+            <property name="cancelLabel" type="String" label="Cancel Button Label" description="Defaults to the FlowFaultCancel custom label" role="inputOnly"/>
+            <property name="selectedAction" type="String" label="Selected Action" description="Retry or Cancel, set when the user clicks a button" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

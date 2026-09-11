@@ -1,0 +1,11 @@
+{
+	"packageDirectories": [
+		{ "path": "force-app", "default": true, "package": "FlowFaultHandling", "versionName": "ver 0.1", "versionNumber": "0.1.0.NEXT" },
+		{ "path": "nebula-adapter", "default": false, "package": "FlowFaultHandlingNebulaAdapter", "versionName": "ver 0.1", "versionNumber": "0.1.0.NEXT", "dependencies": [ { "package": "FlowFaultHandling", "versionNumber": "0.1.0.LATEST" } ] },
+		{ "path": "demo", "default": false }
+	],
+	"name": "salesforce-error-handling",
+	"namespace": "",
+	"sfdcLoginUrl": "https://login.salesforce.com",
+	"sourceApiVersion": "63.0"
+}

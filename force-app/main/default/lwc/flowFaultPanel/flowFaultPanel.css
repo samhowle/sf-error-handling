@@ -1,0 +1,41 @@
+:host {
+	display: block;
+}
+
+.panel {
+	padding: 1rem;
+	border: 1px solid var(--slds-g-color-border-base-1, #c9c9c9);
+	border-left-width: 4px;
+	border-radius: 0.25rem;
+	background: var(--slds-g-color-neutral-base-100, #ffffff);
+}
+
+.panel_error {
+	border-left-color: var(--slds-g-color-error-base-40, #ba0517);
+}
+
+.panel_warning {
+	border-left-color: var(--slds-g-color-warning-base-60, #fe9339);
+}
+
+.fault-message,
+.next-steps,
+.log-notice {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.reference {
+	font-weight: 700;
+}
+
+.technical {
+	max-height: 16rem;
+	overflow: auto;
+	padding: 0.5rem;
+	border-radius: 0.25rem;
+	background: var(--slds-g-color-neutral-base-95, #f3f3f3);
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}

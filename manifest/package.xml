@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Core package (force-app) only. The nebula-adapter and demo directories deploy separately by source directory. -->
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>FlowFaultDebugLogSink</members>
+        <members>FlowFaultHandler</members>
+        <members>FlowFaultHandlerTest</members>
+        <members>FlowFaultLogSink</members>
+        <members>FlowFaultParser</members>
+        <members>FlowFaultParserTest</members>
+        <members>FlowFaultRuleProvider</members>
+        <members>FlowFaultRuleProviderTest</members>
+        <members>FlowFaultService</members>
+        <members>FlowFaultServiceTest</members>
+        <members>FlowFaultSettings</members>
+        <members>FlowFaultSettingsTest</members>
+        <members>FlowFaultSinkResolver</members>
+        <members>FlowFaultSinkResolverTest</members>
+        <members>FlowFaultTestSinks</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomLabel</name>
+    </types>
+    <types>
+        <members>FlowFaultRule.*</members>
+        <members>FlowFaultSetting.Default</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>FlowFaultRule__mdt</members>
+        <members>FlowFaultSetting__mdt</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>FlowFaultHandlerCore</members>
+        <members>FlowFaultHandlerScreen</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>flowFaultPanel</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <version>63.0</version>
+</Package>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>FlowFaultHeading</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Heading shown above a Flow fault message</shortDescription>
+        <value>Something went wrong</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultNextStepsCorrectable</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Next steps when the user can fix the input</shortDescription>
+        <value>Review the message above, go back and correct the information, then try again.</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultNextStepsRetryable</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Next steps when retrying may succeed</shortDescription>
+        <value>This is usually temporary. Wait a moment and try again.</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultNextStepsContactAdmin</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Next steps when the user cannot fix it; {0} = admin contact text</shortDescription>
+        <value>Your changes were not saved. Please contact {0} and share the reference ID below.</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultReferenceLabel</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for the reference ID</shortDescription>
+        <value>Reference ID</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultTechnicalDetailsLabel</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for the technical details expander</shortDescription>
+        <value>Technical details</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultTryAgain</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Try again button</shortDescription>
+        <value>Try again</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultCancel</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cancel button</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultHandlerUnavailable</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shown when the fault handler itself failed</shortDescription>
+        <value>Something went wrong and the error could not be processed. Please contact {0} and share the details below.</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultCopyReference</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Copy reference ID button tooltip</shortDescription>
+        <value>Copy reference ID</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultCopyDetails</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Copy technical details button</shortDescription>
+        <value>Copy details</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultAdminGuidanceLabel</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for admin guidance inside technical details</shortDescription>
+        <value>Admin guidance</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultNotLoggedNotice</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shown when the fault could not be logged persistently</shortDescription>
+        <value>This error could not be logged automatically. Please include the technical details when you contact support.</value>
+    </labels>
+    <labels>
+        <fullName>FlowFaultDefaultUserMessage</fullName>
+        <categories>FlowFault</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generic user message for unclassified faults</shortDescription>
+        <value>An unexpected error occurred and your changes could not be saved.</value>
+    </labels>
+</CustomLabels>

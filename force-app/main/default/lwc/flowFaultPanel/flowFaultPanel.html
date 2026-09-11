@@ -1,0 +1,54 @@
+<template>
+	<div class={containerClass} role="alert">
+		<div class="slds-media slds-media_center slds-m-bottom_small">
+			<div class="slds-media__figure">
+				<lightning-icon icon-name={iconName} variant={iconVariant} size="small"></lightning-icon>
+			</div>
+			<div class="slds-media__body">
+				<h2 class="slds-text-heading_small heading">{headingText}</h2>
+			</div>
+		</div>
+
+		<p class="slds-text-body_regular fault-message">{userMessage}</p>
+
+		<template lwc:if={nextSteps}>
+			<p class="slds-m-top_x-small slds-text-color_weak next-steps">{nextSteps}</p>
+		</template>
+		<template lwc:if={logNotice}>
+			<p class="slds-m-top_x-small slds-text-color_weak log-notice">{logNotice}</p>
+		</template>
+
+		<template lwc:if={hasReference}>
+			<div class="slds-m-top_small slds-grid slds-grid_vertical-align-center">
+				<span class="slds-text-title">{referenceLabel}:</span>
+				<code class="slds-m-left_x-small reference">{referenceId}</code>
+				<lightning-button-icon icon-name={referenceCopyIcon} variant="bare" size="small" class="slds-m-left_x-small copy-reference"
+					alternative-text={labels.copyReference} title={labels.copyReference} onclick={copyReference}></lightning-button-icon>
+			</div>
+		</template>
+
+		<template lwc:if={hasTechnical}>
+			<div class="slds-m-top_small">
+				<button type="button" class="slds-button slds-button_reset slds-text-link details-toggle" onclick={toggleDetails} aria-expanded={detailsExpanded}>
+					<lightning-icon icon-name={detailsIcon} size="x-small" class="slds-m-right_xx-small"></lightning-icon>{technicalLabel}
+				</button>
+				<template lwc:if={detailsOpen}>
+					<div class="slds-m-top_x-small technical-details">
+						<template lwc:if={hasAdminGuidance}>
+							<p class="slds-text-body_small slds-m-bottom_x-small admin-guidance"><strong>{labels.adminGuidance}:</strong> {adminGuidance}</p>
+						</template>
+						<pre class="slds-text-body_small technical">{technicalMessage}</pre>
+						<lightning-button label={detailsCopyLabel} icon-name="utility:copy" variant="base" class="copy-details" onclick={copyDetails}></lightning-button>
+					</div>
+				</template>
+			</div>
+		</template>
+
+		<div class="slds-m-top_medium slds-grid slds-grid_align-end actions">
+			<lightning-button label={cancelText} variant="neutral" class="cancel" onclick={handleCancel}></lightning-button>
+			<template lwc:if={showRetry}>
+				<lightning-button label={retryText} variant="brand" class="slds-m-left_x-small retry" onclick={handleRetry}></lightning-button>
+			</template>
+		</div>
+	</div>
+</template>

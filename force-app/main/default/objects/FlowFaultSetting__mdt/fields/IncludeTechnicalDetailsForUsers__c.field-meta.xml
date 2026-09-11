@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IncludeTechnicalDetailsForUsers__c</fullName>
+    <description>When true, displayMessage includes the raw fault text. Leave false for end users; the LWC panel shows technical details behind an expander regardless.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Include Technical Details For Users</label>
+    <defaultValue>false</defaultValue>
+    <type>Checkbox</type>
+</CustomField>

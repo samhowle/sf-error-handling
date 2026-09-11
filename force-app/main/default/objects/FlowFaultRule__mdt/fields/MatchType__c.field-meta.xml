@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MatchType__c</fullName>
+    <description>How Pattern is compared to the parsed fault. StatusCode: equals the parsed DML status code (e.g. FIELD_CUSTOM_VALIDATION_EXCEPTION). ExceptionType: equals the parsed Apex exception type, with or without namespace. Contains: case-insensitive substring of the raw fault message. Regex: Java regex find() against the raw fault message. Default: always matches; use once as the lowest-priority catch-all.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Match Type</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>StatusCode</fullName>
+                <default>false</default>
+                <label>StatusCode</label>
+            </value>
+            <value>
+                <fullName>ExceptionType</fullName>
+                <default>false</default>
+                <label>ExceptionType</label>
+            </value>
+            <value>
+                <fullName>Contains</fullName>
+                <default>false</default>
+                <label>Contains</label>
+            </value>
+            <value>
+                <fullName>Regex</fullName>
+                <default>false</default>
+                <label>Regex</label>
+            </value>
+            <value>
+                <fullName>Default</fullName>
+                <default>false</default>
+                <label>Default</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

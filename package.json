@@ -1,0 +1,22 @@
+{
+	"name": "salesforce-error-handling",
+	"version": "0.1.0",
+	"private": true,
+	"description": "Reusable Salesforce error-handling framework. Phase 1: Flow fault handling (invocable Apex, subflows, LWC fault panel, Nebula Logger sink).",
+	"license": "UNLICENSED",
+	"scripts": {
+		"rules:generate": "node scripts/generate-rules.js",
+		"rules:check": "node scripts/generate-rules.js --check",
+		"test:unit": "sfdx-lwc-jest",
+		"lint": "eslint **/lwc/**/*.js",
+		"prettier": "prettier --write \"**/*.{cls,trigger,js,json,md,xml}\""
+	},
+	"devDependencies": {
+		"@lwc/eslint-plugin-lwc": "^1.8.0",
+		"@salesforce/eslint-config-lwc": "^3.5.0",
+		"@salesforce/sfdx-lwc-jest": "^5.0.0",
+		"eslint": "^8.57.0",
+		"prettier": "^3.3.0",
+		"prettier-plugin-apex": "^2.1.0"
+	}
+}

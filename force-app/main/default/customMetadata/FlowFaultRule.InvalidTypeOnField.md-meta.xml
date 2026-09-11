@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Invalid type on field</label>
+    <protected>false</protected>
+    <values>
+        <field>AdminGuidance__c</field>
+        <value xsi:type="xsd:string">Data type mismatch in a field assignment: {detail}. Fields: {fields}.</value>
+    </values>
+    <values>
+        <field>Category__c</field>
+        <value xsi:type="xsd:string">Configuration</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsRetryable__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsUserCorrectable__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>MatchType__c</field>
+        <value xsi:type="xsd:string">StatusCode</value>
+    </values>
+    <values>
+        <field>Pattern__c</field>
+        <value xsi:type="xsd:string">INVALID_TYPE_ON_FIELD_IN_RECORD</value>
+    </values>
+    <values>
+        <field>Priority__c</field>
+        <value xsi:type="xsd:double">46</value>
+    </values>
+    <values>
+        <field>Severity__c</field>
+        <value xsi:type="xsd:string">ERROR</value>
+    </values>
+    <values>
+        <field>UserMessageTemplate__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

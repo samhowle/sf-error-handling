@@ -1,0 +1,7 @@
+# Local tooling and docs never deploy
+package.xml
+**/jsconfig.json
+**/.eslintrc.json
+**/__tests__/**
+.DS_Store
+**/jest-mocks/**

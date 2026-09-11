@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Duplicate rule blocked save</label>
+    <protected>false</protected>
+    <values>
+        <field>AdminGuidance__c</field>
+        <value xsi:type="xsd:string">A Duplicate Rule with the Block action fired. Review the Duplicate and Matching Rules on the object, or change the rule action to Allow with alert.</value>
+    </values>
+    <values>
+        <field>Category__c</field>
+        <value xsi:type="xsd:string">Duplicate</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsRetryable__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsUserCorrectable__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>MatchType__c</field>
+        <value xsi:type="xsd:string">StatusCode</value>
+    </values>
+    <values>
+        <field>Pattern__c</field>
+        <value xsi:type="xsd:string">DUPLICATES_DETECTED</value>
+    </values>
+    <values>
+        <field>Priority__c</field>
+        <value xsi:type="xsd:double">31</value>
+    </values>
+    <values>
+        <field>Severity__c</field>
+        <value xsi:type="xsd:string">WARN</value>
+    </values>
+    <values>
+        <field>UserMessageTemplate__c</field>
+        <value xsi:type="xsd:string">A matching record already exists. {detail}</value>
+    </values>
+</CustomMetadata>

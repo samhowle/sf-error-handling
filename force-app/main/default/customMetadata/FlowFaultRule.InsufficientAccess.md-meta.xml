@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Insufficient access</label>
+    <protected>false</protected>
+    <values>
+        <field>AdminGuidance__c</field>
+        <value xsi:type="xsd:string">The running user lacks object or field permission or record sharing, or the record is locked by an approval process. Check permission sets, sharing, and approval locks. Consider running the flow in system context if the change is legitimately privileged.</value>
+    </values>
+    <values>
+        <field>Category__c</field>
+        <value xsi:type="xsd:string">Permission</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsRetryable__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsUserCorrectable__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>MatchType__c</field>
+        <value xsi:type="xsd:string">StatusCode</value>
+    </values>
+    <values>
+        <field>Pattern__c</field>
+        <value xsi:type="xsd:string">INSUFFICIENT_ACCESS_OR_READONLY</value>
+    </values>
+    <values>
+        <field>Priority__c</field>
+        <value xsi:type="xsd:double">60</value>
+    </values>
+    <values>
+        <field>Severity__c</field>
+        <value xsi:type="xsd:string">ERROR</value>
+    </values>
+    <values>
+        <field>UserMessageTemplate__c</field>
+        <value xsi:type="xsd:string">You do not have permission to make this change.</value>
+    </values>
+</CustomMetadata>

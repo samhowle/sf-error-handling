@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Required field missing</label>
+    <protected>false</protected>
+    <values>
+        <field>AdminGuidance__c</field>
+        <value xsi:type="xsd:string">The {operation} did not supply a universally required field ({fields}). Page-layout requiredness does not apply to flows; check field-level requiredness and make sure the flow maps every required field.</value>
+    </values>
+    <values>
+        <field>Category__c</field>
+        <value xsi:type="xsd:string">RequiredField</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsRetryable__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsUserCorrectable__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>MatchType__c</field>
+        <value xsi:type="xsd:string">StatusCode</value>
+    </values>
+    <values>
+        <field>Pattern__c</field>
+        <value xsi:type="xsd:string">REQUIRED_FIELD_MISSING</value>
+    </values>
+    <values>
+        <field>Priority__c</field>
+        <value xsi:type="xsd:double">20</value>
+    </values>
+    <values>
+        <field>Severity__c</field>
+        <value xsi:type="xsd:string">WARN</value>
+    </values>
+    <values>
+        <field>UserMessageTemplate__c</field>
+        <value xsi:type="xsd:string">Required information is missing: {fields}.</value>
+    </values>
+</CustomMetadata>

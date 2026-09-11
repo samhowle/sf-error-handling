@@ -1,0 +1,141 @@
+{
+	"$comment": "Source of truth for FlowFaultRule__mdt records. Run `npm run rules:generate` (node scripts/generate-rules.js) after editing. Placeholders available in userMessage and adminGuidance: {detail} {fields} {statusCode} {operation} {source} {exceptionType} {referenceId} {adminContact} {flow} {element}. Blank userMessage means the parsed {detail} is shown; the Default rule with blank userMessage shows the FlowFaultDefaultUserMessage label.",
+	"rules": [
+		{ "developerName": "LimitExceeded", "label": "Governor limit exceeded", "priority": 5, "matchType": "Regex",
+		  "pattern": "(?i)Too many (SOQL queries|DML statements|DML rows|query rows|callouts|future calls|queueable jobs)|Apex CPU time limit|Apex heap size|LIMIT_EXCEEDED|System\\.LimitException|SINGLE_EMAIL_LIMIT_EXCEEDED|STORAGE_LIMIT_EXCEEDED",
+		  "category": "Limit", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "The system could not finish processing this request because it involved too much data. Your changes were not saved.",
+		  "adminGuidance": "A governor limit was hit: {detail}. Look for loops that contain Get/Create/Update elements in {flow} and in downstream triggers or record-triggered flows on the same objects. Bulkify, move work to a scheduled path, or add a screen boundary to split the transaction." },
+
+		{ "developerName": "MixedDml", "label": "Mixed DML operation", "priority": 6, "matchType": "Contains", "pattern": "MIXED_DML_OPERATION",
+		  "category": "Configuration", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "",
+		  "adminGuidance": "Setup objects (User, Group, PermissionSet...) and standard records were modified in one transaction. Split the work across a screen boundary, a Pause element, or an asynchronous path." },
+
+		{ "developerName": "CalloutFailure", "label": "Callout failure", "priority": 7, "matchType": "Regex",
+		  "pattern": "(?i)System\\.CalloutException|Read timed out|Unable to tunnel|Unauthorized endpoint|IO Exception",
+		  "category": "Apex", "severity": "WARN", "isUserCorrectable": false, "isRetryable": true,
+		  "userMessage": "A connected system did not respond. Your changes were not saved. Please try again in a few minutes.",
+		  "adminGuidance": "An external callout failed: {detail}. Check the Named Credential or Remote Site Setting, endpoint availability, and the integration user's credentials." },
+
+		{ "developerName": "ValidationRule", "label": "Validation rule", "priority": 10, "matchType": "StatusCode", "pattern": "FIELD_CUSTOM_VALIDATION_EXCEPTION",
+		  "category": "Validation", "severity": "WARN", "isUserCorrectable": true, "isRetryable": false,
+		  "userMessage": "{detail}",
+		  "adminGuidance": "A validation rule or an Apex addError() blocked the {operation}; the user message is the rule's own error text. Check active validation rules on the object, then before-save flows and triggers that call addError. Fields: {fields}." },
+
+		{ "developerName": "RequiredFieldMissing", "label": "Required field missing", "priority": 20, "matchType": "StatusCode", "pattern": "REQUIRED_FIELD_MISSING",
+		  "category": "RequiredField", "severity": "WARN", "isUserCorrectable": true, "isRetryable": false,
+		  "userMessage": "Required information is missing: {fields}.",
+		  "adminGuidance": "The {operation} did not supply a universally required field ({fields}). Page-layout requiredness does not apply to flows; check field-level requiredness and make sure the flow maps every required field." },
+
+		{ "developerName": "DuplicateValue", "label": "Duplicate value", "priority": 30, "matchType": "StatusCode", "pattern": "DUPLICATE_VALUE",
+		  "category": "Duplicate", "severity": "WARN", "isUserCorrectable": true, "isRetryable": false,
+		  "userMessage": "{detail}",
+		  "adminGuidance": "A unique or external ID field constraint was violated. Decide whether the flow should update the existing record instead of creating one." },
+
+		{ "developerName": "DuplicatesDetected", "label": "Duplicate rule blocked save", "priority": 31, "matchType": "StatusCode", "pattern": "DUPLICATES_DETECTED",
+		  "category": "Duplicate", "severity": "WARN", "isUserCorrectable": true, "isRetryable": false,
+		  "userMessage": "A matching record already exists. {detail}",
+		  "adminGuidance": "A Duplicate Rule with the Block action fired. Review the Duplicate and Matching Rules on the object, or change the rule action to Allow with alert." },
+
+		{ "developerName": "LookupFilter", "label": "Lookup filter", "priority": 40, "matchType": "StatusCode", "pattern": "FIELD_FILTER_VALIDATION_EXCEPTION",
+		  "category": "LookupFilter", "severity": "WARN", "isUserCorrectable": true, "isRetryable": false,
+		  "userMessage": "{detail}",
+		  "adminGuidance": "A lookup filter rejected the related record. Check lookup filters on {fields} and the criteria the flow uses to pick the related record." },
+
+		{ "developerName": "StringTooLong", "label": "Value too long", "priority": 41, "matchType": "StatusCode", "pattern": "STRING_TOO_LONG",
+		  "category": "Validation", "severity": "WARN", "isUserCorrectable": true, "isRetryable": false,
+		  "userMessage": "{detail}",
+		  "adminGuidance": "A value exceeds the field length on {fields}. Truncate in the flow with LEFT() or widen the field." },
+
+		{ "developerName": "InvalidEmail", "label": "Invalid email address", "priority": 42, "matchType": "StatusCode", "pattern": "INVALID_EMAIL_ADDRESS",
+		  "category": "Validation", "severity": "WARN", "isUserCorrectable": true, "isRetryable": false,
+		  "userMessage": "{detail}",
+		  "adminGuidance": "An email field or Send Email action received an invalid address. Fields: {fields}." },
+
+		{ "developerName": "RestrictedPicklist", "label": "Restricted picklist value", "priority": 43, "matchType": "StatusCode", "pattern": "INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST",
+		  "category": "Configuration", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "One of the values could not be saved because it is not an allowed option.",
+		  "adminGuidance": "The flow assigned a value that is not in the restricted picklist, or not available for the record type. Fields: {fields}. Detail: {detail}." },
+
+		{ "developerName": "FieldIntegrity", "label": "Field integrity", "priority": 45, "matchType": "StatusCode", "pattern": "FIELD_INTEGRITY_EXCEPTION",
+		  "category": "DataIntegrity", "severity": "WARN", "isUserCorrectable": true, "isRetryable": false,
+		  "userMessage": "{detail}",
+		  "adminGuidance": "A field integrity check failed (state/country picklists, record type, dependent picklists). Fields: {fields}." },
+
+		{ "developerName": "InvalidTypeOnField", "label": "Invalid type on field", "priority": 46, "matchType": "StatusCode", "pattern": "INVALID_TYPE_ON_FIELD_IN_RECORD",
+		  "category": "Configuration", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "",
+		  "adminGuidance": "Data type mismatch in a field assignment: {detail}. Fields: {fields}." },
+
+		{ "developerName": "RowLock", "label": "Record locked", "priority": 50, "matchType": "StatusCode", "pattern": "UNABLE_TO_LOCK_ROW",
+		  "category": "RecordLock", "severity": "WARN", "isUserCorrectable": false, "isRetryable": true,
+		  "userMessage": "Another process is updating this record right now.",
+		  "adminGuidance": "Row lock contention on the record or its parent. Look for concurrent automation, batch jobs, or integrations touching the same parent records; consider ordering or retry." },
+
+		{ "developerName": "InsufficientAccess", "label": "Insufficient access", "priority": 60, "matchType": "StatusCode", "pattern": "INSUFFICIENT_ACCESS_OR_READONLY",
+		  "category": "Permission", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "You do not have permission to make this change.",
+		  "adminGuidance": "The running user lacks object or field permission or record sharing, or the record is locked by an approval process. Check permission sets, sharing, and approval locks. Consider running the flow in system context if the change is legitimately privileged." },
+
+		{ "developerName": "InsufficientAccessCrossReference", "label": "Insufficient access to related record", "priority": 61, "matchType": "StatusCode", "pattern": "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY",
+		  "category": "Permission", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "You do not have permission to link to one of the related records.",
+		  "adminGuidance": "The running user cannot access a record referenced in a lookup field. Check sharing on the related object." },
+
+		{ "developerName": "InvalidCrossReference", "label": "Invalid related record", "priority": 62, "matchType": "StatusCode", "pattern": "INVALID_CROSS_REFERENCE_KEY",
+		  "category": "DataIntegrity", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "A related record could not be found.",
+		  "adminGuidance": "A lookup field points at a record ID that does not exist, is the wrong object type, or is inaccessible. Check Get Records results that feed lookup fields; they are null when nothing is found. Fields: {fields}." },
+
+		{ "developerName": "EntityDeleted", "label": "Record deleted", "priority": 63, "matchType": "StatusCode", "pattern": "ENTITY_IS_DELETED",
+		  "category": "NotFound", "severity": "WARN", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "The record no longer exists.",
+		  "adminGuidance": "The record was deleted before the flow finished, usually a stale screen or a race with another process. Re-query before updating." },
+
+		{ "developerName": "MalformedId", "label": "Malformed ID", "priority": 64, "matchType": "StatusCode", "pattern": "MALFORMED_ID",
+		  "category": "Configuration", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "",
+		  "adminGuidance": "An ID value is malformed: {detail}. Usually a text variable or formula is being used where a record ID is expected." },
+
+		{ "developerName": "InvalidField", "label": "Invalid field", "priority": 65, "matchType": "StatusCode", "pattern": "INVALID_FIELD",
+		  "category": "Configuration", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "",
+		  "adminGuidance": "A referenced field does not exist or is not accessible: {detail}. Check for renamed or deleted fields." },
+
+		{ "developerName": "NoApplicableApprovalProcess", "label": "No applicable approval process", "priority": 66, "matchType": "StatusCode", "pattern": "NO_APPLICABLE_PROCESS",
+		  "category": "Configuration", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "This record could not be submitted for approval.",
+		  "adminGuidance": "No active approval process matched the record's entry criteria, or the submitter is not an allowed submitter." },
+
+		{ "developerName": "AlreadyInApproval", "label": "Already in approval", "priority": 67, "matchType": "StatusCode", "pattern": "ALREADY_IN_PROCESS",
+		  "category": "Validation", "severity": "WARN", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "This record is already waiting for approval.",
+		  "adminGuidance": "The record already has a pending approval request. Check for duplicate submit paths." },
+
+		{ "developerName": "TriggerError", "label": "Apex trigger error", "priority": 70, "matchType": "StatusCode", "pattern": "CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY",
+		  "category": "Trigger", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "An automated process on this record failed and your changes were not saved.",
+		  "adminGuidance": "Apex trigger {source} threw {exceptionType}: {detail}. Check the trigger handler and Apex debug logs for the running user." },
+
+		{ "developerName": "NullPointer", "label": "Apex null pointer", "priority": 80, "matchType": "ExceptionType", "pattern": "System.NullPointerException",
+		  "category": "Apex", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "",
+		  "adminGuidance": "Null dereference in Apex ({source}): {detail}. Usually a missing input or a Get Records that returned nothing." },
+
+		{ "developerName": "QueryException", "label": "Apex query exception", "priority": 81, "matchType": "ExceptionType", "pattern": "System.QueryException",
+		  "category": "Apex", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "",
+		  "adminGuidance": "SOQL failed in Apex ({source}): {detail}. Common causes: single-record assignment with no rows, or a non-selective query." },
+
+		{ "developerName": "ApexGeneric", "label": "Apex action error", "priority": 89, "matchType": "Contains", "pattern": "An Apex error occurred",
+		  "category": "Apex", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "",
+		  "adminGuidance": "Invocable Apex action threw {exceptionType}: {detail}. Check the Apex class and debug logs." },
+
+		{ "developerName": "Default", "label": "Default (catch-all)", "priority": 9999, "matchType": "Default", "pattern": "",
+		  "category": "Unknown", "severity": "ERROR", "isUserCorrectable": false, "isRetryable": false,
+		  "userMessage": "",
+		  "adminGuidance": "Unclassified fault. Once understood, add a Flow Fault Rule for this pattern so users get a better message next time." }
+	]
+}

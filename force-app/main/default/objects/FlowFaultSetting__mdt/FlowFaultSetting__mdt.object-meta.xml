@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Org-wide behavior settings for the Flow fault handling framework. The Apex reads the record named Default and falls back to compiled defaults when it is missing.</description>
+    <label>Flow Fault Setting</label>
+    <pluralLabel>Flow Fault Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
