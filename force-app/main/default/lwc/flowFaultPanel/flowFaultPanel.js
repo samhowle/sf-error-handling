@@ -33,8 +33,8 @@ export default class FlowFaultPanel extends LightningElement {
 	@api isUserCorrectable = false;
 	@api isRetryable = false;
 	@api isLogged;
-	@api showTechnicalDetails = true;
-	@api allowRetry = true;
+	@api showTechnicalDetails = false;
+	@api allowRetry = false;
 	@api retryLabel;
 	@api cancelLabel;
 	@api availableActions = [];

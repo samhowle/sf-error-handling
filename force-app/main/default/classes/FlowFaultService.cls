@@ -171,7 +171,7 @@ public with sharing class FlowFaultService {
 		if (r.matchType == FlowFaultRuleProvider.MATCH_STATUS_CODE) { return code != null && code.equalsIgnoreCase(pattern); }
 		if (r.matchType == FlowFaultRuleProvider.MATCH_EXCEPTION_TYPE) { return typeMatches(p.exceptionType, pattern); }
 		if (r.matchType == FlowFaultRuleProvider.MATCH_CONTAINS) { return haystack.containsIgnoreCase(pattern); }
-		if (r.matchType == FlowFaultRuleProvider.MATCH_REGEX) { return Pattern.compile(pattern).matcher(haystack).find(); }
+		if (r.matchType == FlowFaultRuleProvider.MATCH_REGEX) { return System.Pattern.compile(pattern).matcher(haystack).find(); }
 		return false;
 	}
 
