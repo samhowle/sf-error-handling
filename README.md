@@ -8,6 +8,8 @@ Reusable, config-driven error handling for Salesforce. **Phase 1 (this release):
 
 ## What it does
 
+![Architecture](docs/images/architecture.png)
+
 When a Flow element faults, the fault connector hands `$Flow.FaultMessage` to one reusable subflow. The subflow:
 
 1. **Parses** the message: DML operation, status code (outer and, for trigger or Apex DML failures, inner), Apex exception type, originating trigger or class, the human-readable detail, the bracketed field list and any stack trace.
@@ -40,6 +42,7 @@ The handler is the one place in the framework allowed to degrade instead of thro
 | `scripts/generate-rules.js` | Generates the rule records and `docs/fault-rules.md`. Node stdlib only. |
 | `scripts/apex/simulate-faults.apex` | In-org smoke test without building a flow. |
 | `docs/` | Adoption guide, fault message catalogue, design decisions, generated rules table. |
+| `docs/demo-guide.md`, `docs/images/` | Presenter runbook for the demo, plus architecture and demo-flow diagrams and fault panel images for training. Rebuild the PNGs with `node scripts/render-doc-images.js`. |
 
 ## Quick start
 
@@ -60,7 +63,7 @@ sf apex run test --test-level RunSpecifiedTests --class-names FlowFaultParserTes
 sf apex run --file scripts/apex/simulate-faults.apex --target-org <alias>
 ```
 
-Then open the **Flow Fault Demo** flow (Setup → Flows → Run) and pick a scenario.
+Then open the **Flow Fault Demo** flow (Setup → Flows → Run) and pick a scenario. To present it, follow [docs/demo-guide.md](docs/demo-guide.md).
 
 If the org's *Process Automation Settings → Deploy processes and flows as active* is off, the three flows deploy as Draft; activate `FlowFaultHandlerCore` first, then `FlowFaultHandlerScreen`, then `FlowFaultDemo`.
 

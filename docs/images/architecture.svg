@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" width="1280" height="760" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif">
+	<title>Flow fault handling architecture</title>
+	<desc>A fault connector passes $Flow.FaultMessage to the FlowFaultHandlerScreen subflow, which calls FlowFaultHandlerCore and the FlowFaultService pipeline (parse, classify, render, log), rolls back, shows the fault panel and returns Retry or Cancel. DRAFT: AI-generated; verify before use.</desc>
+	<defs>
+		<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#444"/></marker>
+		<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#ba0517"/></marker>
+		<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0176d3"/></marker>
+		<style>
+			.lane { fill: #f4f6f9; }
+			.lane-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; fill: #5c5c5c; }
+			.box { fill: #fff; stroke: #c9c9c9; stroke-width: 1; }
+			.flow-box { fill: #fff; stroke: #0176d3; stroke-width: 1.5; }
+			.step { fill: #f0f6fe; stroke: #0176d3; stroke-width: 1; }
+			.stage { fill: #fff; stroke: #0176d3; stroke-width: 1.5; }
+			.title { font-size: 14px; font-weight: 700; fill: #181818; }
+			.name { font-size: 13px; font-weight: 600; fill: #181818; }
+			.body { font-size: 12px; fill: #444; }
+			.small { font-size: 11px; fill: #5c5c5c; }
+			.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #444; }
+			.badge { fill: #0176d3; }
+			.badge-text { font-size: 12px; font-weight: 700; fill: #fff; }
+			.line { stroke: #444; stroke-width: 1.5; fill: none; }
+			.fault { stroke: #ba0517; stroke-width: 2; stroke-dasharray: 6 4; fill: none; }
+			.call { stroke: #0176d3; stroke-width: 1.5; fill: none; }
+		</style>
+	</defs>
+
+	<rect width="1280" height="760" fill="#ffffff"/>
+
+	<!-- Lane 1: flows -->
+	<rect class="lane" x="20" y="16" width="1240" height="246" rx="8"/>
+	<text class="lane-label" x="40" y="40">FLOW LAYER</text>
+
+	<rect class="box" x="40" y="56" width="260" height="190" rx="6"/>
+	<text class="title" x="56" y="80">Your screen flow</text>
+	<rect class="box" x="60" y="98" width="220" height="44" rx="6"/>
+	<text class="name" x="170" y="125" text-anchor="middle">Create Records</text>
+	<text class="small" x="170" y="160" text-anchor="middle">any DML, Get, Apex or core action</text>
+	<rect class="box" x="60" y="178" width="220" height="44" rx="6"/>
+	<text class="name" x="170" y="205" text-anchor="middle">Decision: Retry or Cancel?</text>
+
+	<path class="fault" d="M280 120H438" marker-end="url(#arrow-red)"/>
+	<text x="360" y="110" text-anchor="middle" font-size="12" font-weight="600" fill="#ba0517">fault connector</text>
+	<text class="mono" x="360" y="138" text-anchor="middle">$Flow.FaultMessage</text>
+	<path class="line" d="M440 200H282" marker-end="url(#arrow)"/>
+	<text class="mono" x="360" y="190" text-anchor="middle">selectedAction</text>
+	<text class="body" x="360" y="218" text-anchor="middle">Retry | Cancel</text>
+
+	<rect class="flow-box" x="440" y="56" width="560" height="190" rx="6"/>
+	<text class="title" x="456" y="80">FlowFaultHandlerScreen</text>
+	<text class="body" x="630" y="80">screen subflow</text>
+	<rect class="step" x="460" y="100" width="180" height="70" rx="6"/>
+	<text class="name" x="550" y="129" text-anchor="middle">Handle Fault (Core)</text>
+	<text class="mono" x="550" y="150" text-anchor="middle">FlowFaultHandlerCore</text>
+	<path class="line" d="M640 135H668" marker-end="url(#arrow)"/>
+	<rect class="step" x="670" y="100" width="150" height="70" rx="6"/>
+	<text class="name" x="745" y="129" text-anchor="middle">Roll Back Records</text>
+	<text class="small" x="745" y="150" text-anchor="middle">when rollBackRecords</text>
+	<path class="line" d="M820 135H848" marker-end="url(#arrow)"/>
+	<rect class="step" x="850" y="100" width="135" height="70" rx="6"/>
+	<text class="name" x="917" y="129" text-anchor="middle">Fault Screen</text>
+	<text class="small" x="917" y="150" text-anchor="middle">flowFaultPanel LWC</text>
+	<text class="body" x="588" y="204">↓ invocable action <tspan font-weight="600" fill="#181818">Handle Flow Fault</tspan> (FlowFaultHandler)</text>
+	<text class="body" x="588" y="224">↑ userMessage · nextSteps · referenceId · isLogged · technicalMessage</text>
+
+	<rect class="box" x="1030" y="56" width="210" height="190" rx="6"/>
+	<text class="title" x="1046" y="80">Record-triggered &amp;</text>
+	<text class="title" x="1046" y="98">autolaunched flows</text>
+	<text class="body" x="1046" y="126">Call FlowFaultHandlerCore</text>
+	<text class="body" x="1046" y="144">directly, then either:</text>
+	<text class="body" x="1046" y="168">• End: log and continue</text>
+	<text class="body" x="1046" y="188">• Custom Error with</text>
+	<text class="mono" x="1058" y="206">userMessage</text>
+	<text class="body" x="1046" y="226">  to block the save</text>
+
+	<!-- Lane 2: Apex service -->
+	<rect class="lane" x="20" y="276" width="1240" height="214" rx="8"/>
+	<text class="lane-label" x="40" y="300">APEX SERVICE</text>
+
+	<rect class="box" x="40" y="316" width="1200" height="160" rx="6"/>
+	<text class="title" x="60" y="340">FlowFaultService</text>
+	<text class="body" x="186" y="340">bulk-safe: one settings load, one rule query, one sink write per batch · never throws, never hides</text>
+
+	<!-- Calls into the service, drawn over the lane backgrounds -->
+	<path class="call" d="M530 170V314" marker-end="url(#arrow-blue)"/>
+	<path class="call" d="M570 316V172" marker-end="url(#arrow-blue)"/>
+	<path class="call" d="M1135 246V314" marker-end="url(#arrow-blue)"/>
+
+	<rect class="stage" x="60" y="356" width="270" height="104" rx="6"/>
+	<circle class="badge" cx="82" cy="378" r="11"/><text class="badge-text" x="82" y="382" text-anchor="middle">1</text>
+	<text class="title" x="102" y="383">Parse</text>
+	<text class="mono" x="76" y="406">FlowFaultParser</text>
+	<text class="body" x="76" y="426">operation, status codes, exception,</text>
+	<text class="body" x="76" y="444">source, fields, detail, stack trace</text>
+	<path class="line" d="M330 408H358" marker-end="url(#arrow)"/>
+
+	<rect class="stage" x="360" y="356" width="270" height="104" rx="6"/>
+	<circle class="badge" cx="382" cy="378" r="11"/><text class="badge-text" x="382" y="382" text-anchor="middle">2</text>
+	<text class="title" x="402" y="383">Classify</text>
+	<text class="body" x="376" y="406">first active rule by priority</text>
+	<text class="body" x="376" y="426">→ category, severity,</text>
+	<text class="body" x="376" y="444">user-correctable, retryable</text>
+	<path class="line" d="M630 408H658" marker-end="url(#arrow)"/>
+
+	<rect class="stage" x="660" y="356" width="270" height="104" rx="6"/>
+	<circle class="badge" cx="682" cy="378" r="11"/><text class="badge-text" x="682" y="382" text-anchor="middle">3</text>
+	<text class="title" x="702" y="383">Render</text>
+	<text class="body" x="676" y="406">user message, next steps,</text>
+	<text class="body" x="676" y="426">admin guidance, technical block</text>
+	<text class="body" x="676" y="444">reference ID <tspan class="mono" font-weight="700" fill="#181818">FLT-3F9A2C1B</tspan></text>
+	<path class="line" d="M930 408H958" marker-end="url(#arrow)"/>
+
+	<rect class="stage" x="960" y="356" width="270" height="104" rx="6"/>
+	<circle class="badge" cx="982" cy="378" r="11"/><text class="badge-text" x="982" y="382" text-anchor="middle">4</text>
+	<text class="title" x="1002" y="383">Log</text>
+	<text class="body" x="976" y="406">one write per batch via the sink</text>
+	<text class="body" x="976" y="426">sink failure → isLogged = false</text>
+	<text class="body" x="976" y="444">+ loggingError and warnings</text>
+
+	<!-- Lane 3: configuration and logging -->
+	<rect class="lane" x="20" y="504" width="1240" height="244" rx="8"/>
+	<text class="lane-label" x="40" y="528">CONFIGURATION &amp; LOGGING</text>
+
+	<rect class="box" x="60" y="560" width="190" height="64" rx="6"/>
+	<text class="mono" x="155" y="587" text-anchor="middle" font-weight="700" fill="#181818">config/fault-rules.json</text>
+	<text class="small" x="155" y="606" text-anchor="middle">source of truth</text>
+	<path class="line" d="M250 592H278" marker-end="url(#arrow)"/>
+	<rect class="box" x="280" y="560" width="150" height="64" rx="6"/>
+	<text class="mono" x="355" y="587" text-anchor="middle" font-weight="700" fill="#181818">generate-rules.js</text>
+	<text class="small" x="355" y="606" text-anchor="middle">--check gates CI</text>
+	<path class="line" d="M430 592H458" marker-end="url(#arrow)"/>
+	<rect class="box" x="460" y="560" width="170" height="64" rx="6"/>
+	<text class="name" x="545" y="587" text-anchor="middle">FlowFaultRule__mdt</text>
+	<text class="small" x="545" y="606" text-anchor="middle">27 rules, priority ordered</text>
+	<path class="line" d="M545 560V463" marker-end="url(#arrow)"/>
+	<text class="small" x="60" y="652">Rule wording and guidance change without code: edit the JSON, regenerate, deploy.</text>
+
+	<rect class="box" x="660" y="560" width="270" height="56" rx="6"/>
+	<text class="name" x="795" y="584" text-anchor="middle">Custom Labels  FlowFault*</text>
+	<text class="small" x="795" y="602" text-anchor="middle">heading, next steps, buttons · translatable</text>
+	<rect class="box" x="660" y="632" width="270" height="72" rx="6"/>
+	<text class="name" x="795" y="656" text-anchor="middle">FlowFaultSetting__mdt.Default</text>
+	<text class="small" x="795" y="676" text-anchor="middle">sink class · logging on/off · ID prefix</text>
+	<text class="small" x="795" y="692" text-anchor="middle">admin contact · technical text cap</text>
+	<path class="line" d="M795 560V463" marker-end="url(#arrow)"/>
+
+	<rect class="box" x="960" y="556" width="270" height="38" rx="6"/>
+	<text class="name" x="1095" y="580" text-anchor="middle">FlowFaultLogSink <tspan class="small" font-style="italic" font-weight="400">interface</tspan></text>
+	<path class="line" d="M1095 556V463" marker-end="url(#arrow)"/>
+	<path class="line" d="M975 594V702"/>
+	<path class="line" d="M975 634H988" marker-end="url(#arrow)"/>
+	<path class="line" d="M975 702H988" marker-end="url(#arrow)"/>
+	<rect class="box" x="990" y="608" width="240" height="52" rx="6"/>
+	<text class="name" x="1004" y="630">FlowFaultNebulaLogSink</text>
+	<text class="small" x="1004" y="648">→ Nebula Logger, tag FlowFault</text>
+	<rect class="box" x="990" y="676" width="240" height="52" rx="6"/>
+	<text class="name" x="1004" y="698">FlowFaultDebugLogSink</text>
+	<text class="small" x="1004" y="716">fallback → debug log, isLogged = false</text>
+</svg>

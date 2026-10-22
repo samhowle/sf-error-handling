@@ -1,0 +1,228 @@
+<!doctype html>
+<!--
+	Static mockup of the flowFaultPanel LWC for documentation and training images.
+	Mirrors flowFaultPanel.html / .css, the shipped Custom Labels and the rule text in config/fault-rules.json.
+	Pick a scenario with ?s=<key> (see SCENARIOS below). Rendered to PNG by scripts/render-doc-images.js.
+	Not the real component: replace with org screenshots once the demo has been run live.
+	DRAFT: AI-generated. Must be human-reviewed and verified before use (Steampunk AI policy).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fault Panel Mockup</title>
+<style>
+	:root {
+		--text: #181818;
+		--text-weak: #5c5c5c;
+		--border: #c9c9c9;
+		--error: #ba0517;
+		--warning: #fe9339;
+		--warning-icon: #a96404;
+		--brand: #0176d3;
+		--brand-dark: #014486;
+		--neutral-95: #f3f3f3;
+		--page: #eef1f6;
+	}
+	* { box-sizing: border-box; }
+	html, body { margin: 0; }
+	body {
+		background: var(--page);
+		color: var(--text);
+		font: 13px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+		padding: 24px;
+	}
+	.frame {
+		width: 640px;
+		background: #fff;
+		border: 1px solid #dddbda;
+		border-radius: 4px;
+		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+		padding: 16px;
+	}
+	.caption {
+		width: 640px;
+		margin-top: 8px;
+		color: #747474;
+		font-size: 11px;
+		text-align: right;
+	}
+
+	/* flowFaultPanel.css */
+	.panel {
+		padding: 1rem;
+		border: 1px solid var(--border);
+		border-left-width: 4px;
+		border-radius: 0.25rem;
+		background: #fff;
+	}
+	.panel_error { border-left-color: var(--error); }
+	.panel_warning { border-left-color: var(--warning); }
+
+	.media { display: flex; align-items: center; gap: 12px; margin-bottom: 0.75rem; }
+	.heading { margin: 0; font-size: 1rem; font-weight: 700; line-height: 1.25; }
+	.icon { width: 24px; height: 24px; flex: none; }
+	.fault-message { margin: 0; font-size: 0.875rem; white-space: pre-wrap; }
+	.weak { margin: 0.5rem 0 0; color: var(--text-weak); white-space: pre-wrap; }
+
+	.reference-row { display: flex; align-items: center; margin-top: 0.75rem; }
+	.text-title { font-size: 0.75rem; color: #444; }
+	.reference {
+		margin-left: 0.5rem;
+		font: 700 0.8125rem ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	}
+	.copy-icon { margin-left: 0.5rem; width: 14px; height: 14px; color: #747474; }
+
+	.details-toggle {
+		margin-top: 0.75rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		color: var(--brand);
+		font-size: 0.8125rem;
+	}
+	.details-toggle svg { width: 12px; height: 12px; }
+	.technical-details { margin-top: 0.5rem; }
+	.admin-guidance { margin: 0 0 0.5rem; font-size: 0.75rem; }
+	.technical {
+		margin: 0;
+		padding: 0.5rem;
+		border-radius: 0.25rem;
+		background: var(--neutral-95);
+		font: 0.75rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
+	}
+	.base-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		margin-top: 0.25rem;
+		color: var(--brand);
+		font-size: 0.8125rem;
+	}
+	.base-button svg { width: 12px; height: 12px; }
+
+	.actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem; }
+	.button {
+		display: inline-flex;
+		align-items: center;
+		height: 32px;
+		padding: 0 1rem;
+		border: 1px solid var(--border);
+		border-radius: 0.25rem;
+		background: #fff;
+		color: var(--brand);
+		font-size: 0.8125rem;
+		font-weight: 400;
+	}
+	.button_brand { background: var(--brand); border-color: var(--brand); color: #fff; }
+</style>
+</head>
+<body>
+<div class="frame"><div id="panel"></div></div>
+<div class="caption">Illustrative mockup rendered from flowFaultPanel markup, shipped labels and rules</div>
+
+<script>
+	// Shipped Custom Labels (labels/CustomLabels.labels-meta.xml) with the Default settings' adminContactText.
+	const LABELS = {
+		heading: 'Something went wrong',
+		reference: 'Reference ID',
+		technical: 'Technical details',
+		tryAgain: 'Try again',
+		cancel: 'Cancel',
+		copyReference: 'Copy reference ID',
+		copyDetails: 'Copy details',
+		adminGuidance: 'Admin guidance',
+		notLogged: 'This error could not be logged automatically. Please include the technical details when you contact support.',
+		nextCorrectable: 'Review the message above, go back and correct the information, then try again.',
+		nextRetryable: 'This is usually temporary. Wait a moment and try again.',
+		nextContactAdmin: 'Your changes were not saved. Please contact your Salesforce administrator and share the reference ID below.'
+	};
+
+	// Values are what FlowFaultService renders for each demo fault. Reference IDs are random in the org.
+	const SCENARIOS = {
+		validation: {
+			isUserCorrectable: true,
+			userMessage: 'Last name cannot be Reject. Enter a different last name.',
+			nextSteps: LABELS.nextCorrectable,
+			referenceId: 'FLT-7C21E04B'
+		},
+		'validation-details': {
+			isUserCorrectable: true,
+			userMessage: 'Last name cannot be Reject. Enter a different last name.',
+			nextSteps: LABELS.nextCorrectable,
+			referenceId: 'FLT-7C21E04B',
+			detailsOpen: true,
+			adminGuidance: 'A validation rule or an Apex addError() blocked the Create; the user message is the rule\'s own error text. Check active validation rules on the object, then before-save flows and triggers that call addError. Fields: LastName.',
+			technicalMessage: [
+				'Flow: FlowFaultDemo | Element: Create_Contact | Operation: Create | Status: FIELD_CUSTOM_VALIDATION_EXCEPTION | Exception: n/a | Source: n/a',
+				'Fields: LastName',
+				'Fault: This error occurred when the flow tried to create records: FIELD_CUSTOM_VALIDATION_EXCEPTION: Last name cannot be Reject. Enter a different last name.: [LastName]',
+				'Context: Scenario=None; LastName=Reject'
+			].join('\n')
+		},
+		'required-field': {
+			isUserCorrectable: true,
+			userMessage: 'Required information is missing: LastName.',
+			nextSteps: LABELS.nextCorrectable,
+			referenceId: 'FLT-0B94D6A2'
+		},
+		'apex-error': {
+			isUserCorrectable: false,
+			userMessage: 'Attempt to de-reference a null object',
+			nextSteps: LABELS.nextContactAdmin,
+			referenceId: 'FLT-E25A9F31'
+		},
+		'row-lock': {
+			isUserCorrectable: false,
+			userMessage: 'Another process is updating this record right now.',
+			nextSteps: LABELS.nextRetryable,
+			referenceId: 'FLT-4D8B1C70'
+		},
+		'not-logged': {
+			isUserCorrectable: false,
+			isLogged: false,
+			userMessage: 'Demo exception requested by the flow (Custom)',
+			nextSteps: LABELS.nextContactAdmin,
+			referenceId: 'FLT-91F3A6DE'
+		}
+	};
+
+	const ICONS = {
+		warning: '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#a96404" d="M12 2.2c.6 0 1.1.3 1.4.8l9.2 16.6c.6 1.1-.2 2.4-1.4 2.4H2.8c-1.2 0-2-1.3-1.4-2.4L10.6 3c.3-.5.8-.8 1.4-.8z"/><path fill="#fff" d="M11 8.5h2v6h-2zM11 16.3h2v2h-2z"/></svg>',
+		error: '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="#ba0517"/><path stroke="#fff" stroke-width="2.2" stroke-linecap="round" d="M8.2 8.2l7.6 7.6M15.8 8.2l-7.6 7.6"/></svg>',
+		copy: '<svg class="copy-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="9" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11 3.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>',
+		chevronRight: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2l4 4-4 4" fill="none" stroke="#5c5c5c" stroke-width="1.6"/></svg>',
+		chevronDown: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="#5c5c5c" stroke-width="1.6"/></svg>',
+		copySmall: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="9" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 3.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
+	};
+
+	const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+
+	function render(s) {
+		const warning = s.isUserCorrectable;
+		const details = s.detailsOpen
+			? '<div class="technical-details">'
+				+ (s.adminGuidance ? '<p class="admin-guidance"><strong>' + LABELS.adminGuidance + ':</strong> ' + esc(s.adminGuidance) + '</p>' : '')
+				+ '<pre class="technical">' + esc(s.technicalMessage) + '</pre>'
+				+ '<span class="base-button">' + ICONS.copySmall + LABELS.copyDetails + '</span>'
+				+ '</div>'
+			: '';
+		return '<div class="panel ' + (warning ? 'panel_warning' : 'panel_error') + '" role="alert">'
+			+ '<div class="media">' + (warning ? ICONS.warning : ICONS.error) + '<h2 class="heading">' + LABELS.heading + '</h2></div>'
+			+ '<p class="fault-message">' + esc(s.userMessage) + '</p>'
+			+ '<p class="weak">' + esc(s.nextSteps) + '</p>'
+			+ (s.isLogged === false ? '<p class="weak">' + LABELS.notLogged + '</p>' : '')
+			+ '<div class="reference-row"><span class="text-title">' + LABELS.reference + ':</span><code class="reference">' + s.referenceId + '</code>' + ICONS.copy + '</div>'
+			+ '<div class="details-toggle">' + (s.detailsOpen ? ICONS.chevronDown : ICONS.chevronRight) + LABELS.technical + '</div>'
+			+ details
+			+ '<div class="actions"><span class="button">' + LABELS.cancel + '</span><span class="button button_brand">' + LABELS.tryAgain + '</span></div>'
+			+ '</div>';
+	}
+
+	const key = new URLSearchParams(location.search).get('s') || 'validation';
+	document.getElementById('panel').innerHTML = render(SCENARIOS[key] || SCENARIOS.validation);
+</script>
+</body>
+</html>

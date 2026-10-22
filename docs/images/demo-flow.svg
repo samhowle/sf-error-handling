@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 920" width="1120" height="920" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif">
+	<title>FlowFaultDemo flow</title>
+	<desc>The FlowFaultDemo screen flow: pick a scenario, route to one of three faulting elements, each with a fault connector to its own FlowFaultHandlerScreen subflow element; all feed one decision that loops back on Retry and ends on Cancel. DRAFT: AI-generated; verify before use.</desc>
+	<defs>
+		<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#444"/></marker>
+		<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#ba0517"/></marker>
+		<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0176d3"/></marker>
+		<style>
+			.node { fill: #fff; stroke: #c9c9c9; stroke-width: 1; }
+			.handler { fill: #f0f6fe; stroke: #0176d3; stroke-width: 1.5; }
+			.decision { fill: #fff4e5; stroke: #dd7a01; stroke-width: 1.5; }
+			.terminal { fill: #f3f3f3; stroke: #c9c9c9; stroke-width: 1; }
+			.type { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; fill: #0176d3; }
+			.name { font-size: 13px; font-weight: 600; fill: #181818; }
+			.body { font-size: 12px; fill: #444; }
+			.small { font-size: 11px; fill: #5c5c5c; }
+			.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #444; }
+			.line { stroke: #444; stroke-width: 1.5; fill: none; }
+			.normal { stroke: #8a8a8a; stroke-width: 1.5; fill: none; }
+			.fault { stroke: #ba0517; stroke-width: 2; stroke-dasharray: 6 4; fill: none; }
+			.goto { stroke: #0176d3; stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; }
+			.th { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; fill: #5c5c5c; }
+			.rule { stroke: #e5e5e5; stroke-width: 1; }
+		</style>
+	</defs>
+
+	<rect width="1120" height="920" fill="#ffffff"/>
+
+	<!-- Entry -->
+	<rect class="terminal" x="420" y="20" width="100" height="32" rx="16"/>
+	<text class="name" x="470" y="41" text-anchor="middle">Start</text>
+	<path class="line" d="M470 52V88" marker-end="url(#arrow)"/>
+
+	<rect class="node" x="340" y="90" width="260" height="60" rx="6"/>
+	<text class="type" x="356" y="108">SCREEN</text>
+	<text class="name" x="356" y="126">Choose Scenario</text>
+	<text class="small" x="356" y="142">scenario radio buttons + last name</text>
+	<path class="line" d="M470 150V174" marker-end="url(#arrow)"/>
+
+	<path class="decision" d="M470 176L514 210L470 244L426 210Z"/>
+	<text class="name" x="528" y="214">Route scenario</text>
+
+	<!-- Branches -->
+	<path class="line" d="M470 244V268M160 268H780"/>
+	<path class="line" d="M160 268V308" marker-end="url(#arrow)"/>
+	<path class="line" d="M470 268V308" marker-end="url(#arrow)"/>
+	<path class="line" d="M780 268V308" marker-end="url(#arrow)"/>
+	<text class="small" x="168" y="293">Required field missing</text>
+	<text class="small" x="478" y="293">Apex scenario (default)</text>
+	<text class="small" x="788" y="293">Success (None)</text>
+
+	<!-- Faulting elements -->
+	<rect class="node" x="40" y="310" width="240" height="66" rx="6"/>
+	<text class="type" x="56" y="328">CREATE RECORDS</text>
+	<text class="name" x="56" y="347">Create Contact</text>
+	<text class="small" x="56" y="365">LastName not set</text>
+
+	<rect class="node" x="350" y="310" width="240" height="66" rx="6"/>
+	<text class="type" x="366" y="328">APEX ACTION</text>
+	<text class="name" x="366" y="347">Throw Exception</text>
+	<text class="small" x="366" y="365">Custom, NullPointer or Dml</text>
+
+	<rect class="node" x="660" y="310" width="240" height="66" rx="6"/>
+	<text class="type" x="676" y="328">CREATE RECORDS</text>
+	<text class="name" x="676" y="347">Create Contact</text>
+	<text class="small" x="676" y="365">valid unless a validation rule rejects it</text>
+
+	<path class="normal" d="M900 343H938" marker-end="url(#arrow)"/>
+	<rect class="node" x="940" y="310" width="150" height="66" rx="6"/>
+	<text class="type" x="956" y="328">SCREEN</text>
+	<text class="name" x="956" y="347">Success</text>
+	<text class="small" x="956" y="365">shows the Contact ID</text>
+
+	<!-- Fault connectors -->
+	<path class="fault" d="M160 376V428" marker-end="url(#arrow-red)"/>
+	<path class="fault" d="M470 376V428" marker-end="url(#arrow-red)"/>
+	<path class="fault" d="M780 376V428" marker-end="url(#arrow-red)"/>
+	<text x="168" y="406" font-size="11" font-weight="600" fill="#ba0517">Fault</text>
+	<text x="478" y="406" font-size="11" font-weight="600" fill="#ba0517">Fault</text>
+	<text x="788" y="406" font-size="11" font-weight="600" fill="#ba0517">Fault</text>
+
+	<!-- Handler subflows -->
+	<rect class="handler" x="40" y="430" width="240" height="90" rx="6"/>
+	<text class="type" x="56" y="449">SUBFLOW · FlowFaultHandlerScreen</text>
+	<text class="name" x="56" y="469">Handle_Fault_Missing_Name</text>
+	<text class="small" x="56" y="489">elementApiName =</text>
+	<text class="mono" x="56" y="506">Create_Contact_Missing_Name</text>
+
+	<rect class="handler" x="350" y="430" width="240" height="90" rx="6"/>
+	<text class="type" x="366" y="449">SUBFLOW · FlowFaultHandlerScreen</text>
+	<text class="name" x="366" y="469">Handle_Fault_Apex</text>
+	<text class="small" x="366" y="489">elementApiName =</text>
+	<text class="mono" x="366" y="506">Throw_Exception</text>
+
+	<rect class="handler" x="660" y="430" width="240" height="90" rx="6"/>
+	<text class="type" x="676" y="449">SUBFLOW · FlowFaultHandlerScreen</text>
+	<text class="name" x="676" y="469">Handle_Fault_Create</text>
+	<text class="small" x="676" y="489">elementApiName =</text>
+	<text class="mono" x="676" y="506">Create_Contact</text>
+
+	<!-- Merge into one decision -->
+	<path class="line" d="M160 520V548H780M780 520V548M470 520V564" marker-end="url(#arrow)"/>
+	<path class="decision" d="M470 566L514 600L470 634L426 600Z"/>
+	<text class="name" x="528" y="596">What did the user choose?</text>
+	<text class="mono" x="528" y="613">selectedAction</text>
+
+	<path class="line" d="M470 634V676" marker-end="url(#arrow)"/>
+	<text class="small" x="478" y="660">Cancel (default)</text>
+	<rect class="terminal" x="420" y="678" width="100" height="32" rx="16"/>
+	<text class="name" x="470" y="699" text-anchor="middle">End</text>
+
+	<!-- Retry loop -->
+	<path class="goto" d="M426 600H24V120H338" marker-end="url(#arrow-blue)"/>
+	<text x="225" y="592" text-anchor="middle" font-size="12" font-weight="600" fill="#0176d3">Retry · Go To Choose Scenario</text>
+
+	<!-- Legend -->
+	<g transform="translate(745 580)">
+		<path class="fault" d="M0 8H40"/><text class="body" x="52" y="12">fault connector, passes $Flow.FaultMessage</text>
+		<path class="normal" d="M0 34H40"/><text class="body" x="52" y="38">normal path</text>
+		<path class="goto" d="M0 60H40"/><text class="body" x="52" y="64">Go To connector (Retry loop)</text>
+		<rect class="handler" x="0" y="80" width="40" height="18" rx="3"/><text class="body" x="52" y="94">same subflow, one element per faulting element</text>
+	</g>
+
+	<!-- Scenario outcomes -->
+	<text class="name" x="40" y="752">What each scenario shows</text>
+	<line class="rule" x1="40" y1="766" x2="1080" y2="766"/>
+	<text class="th" x="40" y="784">SCENARIO</text>
+	<text class="th" x="250" y="784">FAULTING ELEMENT</text>
+	<text class="th" x="470" y="784">RULE → CATEGORY</text>
+	<text class="th" x="860" y="784">PANEL</text>
+	<line class="rule" x1="40" y1="792" x2="1080" y2="792"/>
+
+	<text class="body" x="40" y="810">Required field missing</text>
+	<text class="mono" x="250" y="810">Create_Contact_Missing_Name</text>
+	<text class="body" x="470" y="810">RequiredFieldMissing → RequiredField</text>
+	<text class="body" x="860" y="810">warning · fix and try again</text>
+
+	<text class="body" x="40" y="830">Apex: custom exception</text>
+	<text class="mono" x="250" y="830">Throw_Exception</text>
+	<text class="body" x="470" y="830">ApexGeneric → Apex</text>
+	<text class="body" x="860" y="830">error · contact admin</text>
+
+	<text class="body" x="40" y="850">Apex: null pointer</text>
+	<text class="mono" x="250" y="850">Throw_Exception</text>
+	<text class="body" x="470" y="850">NullPointer → Apex</text>
+	<text class="body" x="860" y="850">error · contact admin</text>
+
+	<text class="body" x="40" y="870">Apex: DML failure</text>
+	<text class="mono" x="250" y="870">Throw_Exception</text>
+	<text class="body" x="470" y="870">RequiredFieldMissing → RequiredField (expected)</text>
+	<text class="body" x="860" y="870">warning · fix and try again</text>
+
+	<text class="body" x="40" y="890">Success + demo validation rule</text>
+	<text class="mono" x="250" y="890">Create_Contact</text>
+	<text class="body" x="470" y="890">ValidationRule → Validation</text>
+	<text class="body" x="860" y="890">warning · rule text verbatim</text>
+
+	<text class="body" x="40" y="910">Success, any other last name</text>
+	<text class="mono" x="250" y="910">none</text>
+	<text class="body" x="470" y="910">none</text>
+	<text class="body" x="860" y="910">Success screen</text>
+</svg>
